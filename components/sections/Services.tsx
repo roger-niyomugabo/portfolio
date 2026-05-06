@@ -26,7 +26,7 @@ export function Services() {
               <div className="group relative h-full overflow-hidden rounded-2xl border border-border bg-surface p-6 transition-all hover:border-brand-500/50 md:p-8">
                 <div className="relative flex h-full flex-col">
                   <div className="mb-5 flex items-center gap-3">
-                    <span className="grid h-12 w-12 place-items-center rounded-xl bg-gradient-to-br from-brand-500 to-fuchsia-500 text-white shadow-lg shadow-brand-500/20">
+                    <span className="grid h-12 w-12 place-items-center rounded-xl bg-gradient-to-br from-brand-500 to-accent-500 text-white shadow-lg shadow-brand-500/20">
                       <Icon className="h-5 w-5" />
                     </span>
                     <h3 className="font-display text-xl font-semibold">

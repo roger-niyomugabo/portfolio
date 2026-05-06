@@ -21,7 +21,7 @@ export function Footer() {
               href="/"
               className="flex items-center gap-2 font-display text-lg font-semibold"
             >
-              <span className="grid h-8 w-8 place-items-center rounded-lg bg-gradient-to-br from-brand-500 to-fuchsia-500 text-white shadow-md">
+              <span className="grid h-8 w-8 place-items-center rounded-lg bg-gradient-to-br from-brand-500 to-accent-500 text-white shadow-md">
                 R
               </span>
               {profile.name}

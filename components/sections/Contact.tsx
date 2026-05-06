@@ -226,7 +226,7 @@ function Field({
       </span>
       {input}
       {error && (
-        <span className="mt-1 block text-xs text-rose-500">{error}</span>
+        <span className="mt-1 block text-xs text-red-500">{error}</span>
       )}
     </label>
   );

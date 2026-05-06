@@ -43,7 +43,7 @@ export function Testimonials() {
 
           <div className="mt-8 flex items-center justify-between">
             <div className="flex items-center gap-3">
-              <span className="grid h-12 w-12 place-items-center rounded-full bg-gradient-to-br from-brand-500 to-fuchsia-500 font-display text-sm font-semibold text-white">
+              <span className="grid h-12 w-12 place-items-center rounded-full bg-gradient-to-br from-brand-500 to-accent-500 font-display text-sm font-semibold text-white">
                 {current.initials}
               </span>
               <div>

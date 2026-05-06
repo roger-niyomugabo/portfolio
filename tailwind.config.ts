@@ -27,22 +27,24 @@ const config: Config = {
         muted: "rgb(var(--muted) / <alpha-value>)",
         fg: "rgb(var(--fg) / <alpha-value>)",
         subtle: "rgb(var(--subtle) / <alpha-value>)",
+        primary: "rgb(var(--primary) / <alpha-value>)",
+        ring: "rgb(var(--ring) / <alpha-value>)",
         brand: {
-          50: "#eef2ff",
-          100: "#e0e7ff",
-          200: "#c7d2fe",
-          300: "#a5b4fc",
-          400: "#818cf8",
-          500: "#6366f1",
-          600: "#4f46e5",
-          700: "#4338ca",
-          800: "#3730a3",
-          900: "#312e81"
+          50: "#e6f5f8",
+          100: "#b8e1ea",
+          200: "#8acdda",
+          300: "#5cb8cb",
+          400: "#2ea4bb",
+          500: "#0082a0",
+          600: "#007088",
+          700: "#005d70",
+          800: "#004a59",
+          900: "#003741"
         },
         accent: {
-          400: "#34d399",
-          500: "#10b981",
-          600: "#059669"
+          400: "#5fb7ec",
+          500: "#0089d5",
+          600: "#006eb0"
         }
       },
       backgroundImage: {

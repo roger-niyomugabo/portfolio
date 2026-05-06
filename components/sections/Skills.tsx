@@ -39,7 +39,7 @@ export function Skills() {
               <div className="group relative h-full overflow-hidden rounded-2xl border border-border bg-surface p-6 transition-all hover:border-brand-500/50 hover:shadow-lg hover:shadow-brand-500/5">
                 <div
                   aria-hidden
-                  className="absolute -right-12 -top-12 h-32 w-32 rounded-full bg-gradient-to-br from-brand-500/20 to-fuchsia-500/20 opacity-0 blur-2xl transition-opacity duration-500 group-hover:opacity-100"
+                  className="absolute -right-12 -top-12 h-32 w-32 rounded-full bg-gradient-to-br from-brand-500/20 to-accent-500/20 opacity-0 blur-2xl transition-opacity duration-500 group-hover:opacity-100"
                 />
                 <div className="relative">
                   <div className="mb-5 flex items-center gap-3">
@@ -74,7 +74,7 @@ export function Skills() {
                                 ease: [0.22, 1, 0.36, 1],
                                 delay: 0.1
                               }}
-                              className="h-full rounded-full bg-gradient-to-r from-brand-500 to-fuchsia-500"
+                              className="h-full rounded-full bg-gradient-to-r from-brand-500 to-accent-500"
                             />
                           </div>
                         )}

@@ -32,7 +32,7 @@ export function Hero() {
       >
         <div className="absolute left-1/2 top-0 h-[600px] w-[1100px] -translate-x-1/2 bg-radial-fade" />
         <div className="absolute -top-32 -left-20 h-72 w-72 animate-blob rounded-full bg-brand-500/20 blur-3xl" />
-        <div className="absolute -top-10 right-0 h-72 w-72 animate-blob rounded-full bg-fuchsia-500/20 blur-3xl [animation-delay:-4s]" />
+        <div className="absolute -top-10 right-0 h-72 w-72 animate-blob rounded-full bg-accent-500/20 blur-3xl [animation-delay:-4s]" />
         <div className="absolute top-40 left-1/3 h-72 w-72 animate-blob rounded-full bg-cyan-500/20 blur-3xl [animation-delay:-8s]" />
         <div className="absolute inset-0 bg-grid-pattern bg-[size:48px_48px] opacity-40 [mask-image:radial-gradient(ellipse_at_center,black,transparent_75%)]" />
       </div>

@@ -33,7 +33,7 @@ export const projects: Project[] = [
       "Indexed PostgreSQL queries kept the product list snappy at 10k+ SKUs",
       "Containerized stack made onboarding new environments trivial"
     ],
-    cover: { from: "from-indigo-500", to: "to-cyan-500", emoji: "📦" }
+    cover: { from: "from-blue-500", to: "to-cyan-500", emoji: "📦" }
   },
   {
     slug: "skill-synchronization",
@@ -60,7 +60,7 @@ export const projects: Project[] = [
       "Gave students structured feedback on application strength",
       "Established a reusable architecture for future matching products"
     ],
-    cover: { from: "from-fuchsia-500", to: "to-rose-500", emoji: "🎓" }
+    cover: { from: "from-orange-500", to: "to-amber-500", emoji: "🎓" }
   },
   {
     slug: "keza-eshop",
@@ -139,7 +139,7 @@ export const projects: Project[] = [
       "Fewer release-day surprises",
       "Confidence to ship multiple times per day"
     ],
-    cover: { from: "from-sky-500", to: "to-indigo-500", emoji: "🚀" }
+    cover: { from: "from-sky-500", to: "to-blue-600", emoji: "🚀" }
   }
 ];
 

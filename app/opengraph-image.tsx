@@ -17,9 +17,8 @@ export default function Image() {
           flexDirection: "column",
           justifyContent: "center",
           padding: "80px",
-          background:
-            "linear-gradient(135deg, #0b1020 0%, #1e1b4b 60%, #312e81 100%)",
-          color: "white",
+          background: "linear-gradient(135deg, #2c806e 0%, #16623e 100%)",
+          color: "#ffffff",
           fontFamily: "system-ui"
         }}
       >
@@ -39,11 +38,7 @@ export default function Image() {
             fontSize: 88,
             fontWeight: 800,
             lineHeight: 1.05,
-            marginTop: 24,
-            backgroundImage:
-              "linear-gradient(135deg, #818cf8 0%, #f472b6 100%)",
-            backgroundClip: "text",
-            color: "transparent"
+            marginTop: 24
           }}
         >
           {profile.name}

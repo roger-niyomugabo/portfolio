@@ -4,6 +4,7 @@ export const profile: Profile = {
   name: "Roger Niyomugabo",
   firstName: "Roger",
   title: "Full Stack Software Engineer",
+  headline: ["Full Stack", "Engineer"],
   tagline:
     "I design, build, and ship production web applications end-to-end - from intuitive React frontends to scalable Node.js, NestJS, and Django backends.",
   bio: "I'm a Full Stack Software Engineer based in Kigali, Rwanda with 4+ years of experience shipping production software across e-commerce, edtech, legal tech, and logistics. I love owning features end-to-end: collaborating with users on discovery, making sharp architecture decisions, and delivering polished, well-tested releases that perform under load.",

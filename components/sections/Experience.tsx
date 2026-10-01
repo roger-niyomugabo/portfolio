@@ -8,14 +8,14 @@ export function Experience() {
   return (
     <Section
       id="experience"
-      eyebrow="Experience"
+      heading="experience."
       title={<>Roles and what I shipped.</>}
       description="A timeline of where I've worked, what I owned, and the kinds of problems I helped solve."
     >
       <ol className="relative mx-auto max-w-4xl">
         <span
           aria-hidden
-          className="absolute left-4 top-2 h-full w-px bg-gradient-to-b from-brand-500/60 via-border to-transparent md:left-1/2"
+          className="absolute left-4 top-2 h-full w-px bg-border md:left-1/2"
         />
 
         {experiences.map((exp, idx) => (
@@ -32,9 +32,9 @@ export function Experience() {
                 >
                   <span className="relative grid h-4 w-4 place-items-center">
                     {exp.current && (
-                      <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-brand-500 opacity-60" />
+                      <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-accent opacity-40" />
                     )}
-                    <span className="relative h-3 w-3 rounded-full border-2 border-bg bg-brand-500" />
+                    <span className="relative h-3 w-3 rounded-full border-2 border-bg bg-accent" />
                   </span>
                 </span>
 
@@ -46,7 +46,7 @@ export function Experience() {
                       : "pl-12 md:col-start-2 md:pl-12"
                   }
                 >
-                  <div className="rounded-2xl border border-border bg-surface p-6 transition-colors hover:border-brand-500/50">
+                  <div className="card p-6 transition-colors hover:border-accent">
                     <div
                       className={`mb-2 flex flex-wrap items-center gap-2 text-xs text-muted ${
                         idx % 2 === 0 ? "md:justify-end" : ""
@@ -60,19 +60,19 @@ export function Experience() {
                         <MapPin className="h-3 w-3" />
                         {exp.location}
                       </span>
-                      {exp.current && (
-                        <Badge tone="brand">Current</Badge>
-                      )}
+                      {exp.current && <Badge tone="accent">Current</Badge>}
                     </div>
                     <h3 className="font-display text-lg font-semibold leading-tight">
                       {exp.role}
                     </h3>
-                    <p className="mt-1 text-sm font-medium text-brand-500">
+                    <p className="mt-1 text-sm font-medium">
                       <span className="inline-flex items-center gap-1.5">
                         <Briefcase className="h-3.5 w-3.5" />
                         {exp.company}
                       </span>
-                      <span className="ml-2 text-muted">· {exp.type}</span>
+                      <span className="ml-2 font-normal text-muted">
+                        · {exp.type}
+                      </span>
                     </p>
                     <ul
                       className={`mt-4 space-y-2 text-sm leading-relaxed text-subtle ${

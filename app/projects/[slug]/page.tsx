@@ -29,16 +29,15 @@ export default function ProjectPage({ params }: Props) {
   return (
     <article className="pt-24">
       <div
-        className={`relative h-72 bg-gradient-to-br ${project.cover.from} ${project.cover.to} overflow-hidden md:h-96`}
+        className="accent-panel relative h-72 overflow-hidden md:h-96"
       >
-        <div className="absolute inset-0 bg-grid-pattern bg-[size:32px_32px] opacity-30" />
-        <span className="absolute inset-0 grid place-items-center text-8xl drop-shadow-2xl md:text-9xl">
+        <span className="absolute inset-0 grid place-items-center text-8xl md:text-9xl">
           {project.cover.emoji}
         </span>
       </div>
 
-      <div className="container -mt-16 md:-mt-20">
-        <div className="mx-auto max-w-3xl rounded-2xl border border-border bg-surface p-6 shadow-xl shadow-black/5 md:p-10">
+      <div className="container relative -mt-16 md:-mt-20">
+        <div className="card mx-auto max-w-3xl p-6 md:p-10">
           <Link
             href="/projects"
             className="mb-6 inline-flex items-center gap-1.5 text-sm text-muted transition-colors hover:text-fg"
@@ -58,10 +57,10 @@ export default function ProjectPage({ params }: Props) {
             </span>
           </div>
 
-          <h1 className="font-display text-3xl font-bold tracking-tight md:text-4xl">
+          <h1 className="font-display text-3xl font-extrabold md:text-5xl md:leading-tight">
             {project.title}
           </h1>
-          <p className="mt-2 text-lg text-brand-500">{project.tagline}</p>
+          <p className="mt-2 text-lg font-medium">{project.tagline}</p>
 
           <p className="mt-6 text-base leading-relaxed text-subtle md:text-lg">
             {project.description}
@@ -80,7 +79,7 @@ export default function ProjectPage({ params }: Props) {
                   key={l.href}
                   href={l.href}
                   target="_blank"
-                  className="inline-flex items-center gap-2 rounded-full border border-border bg-bg px-4 py-2 text-sm font-medium hover:border-brand-500"
+                  className="btn btn-outline"
                 >
                   {l.label}
                   <ArrowUpRight className="h-4 w-4" />
@@ -95,16 +94,16 @@ export default function ProjectPage({ params }: Props) {
           <Section title="My approach" body={project.solution} />
 
           <div>
-            <h2 className="font-display text-2xl font-semibold tracking-tight">
+            <h2 className="font-display text-2xl font-semibold md:text-[28px]">
               Key highlights
             </h2>
             <ul className="mt-4 space-y-3">
               {project.highlights.map((h) => (
                 <li
                   key={h}
-                  className="flex items-start gap-3 rounded-xl border border-border bg-surface p-4 text-sm leading-relaxed text-subtle"
+                  className="card flex items-start gap-3 p-4 text-sm leading-relaxed text-subtle"
                 >
-                  <span className="mt-1.5 inline-block h-1.5 w-1.5 flex-shrink-0 rounded-full bg-brand-500" />
+                  <span className="mt-1.5 inline-block h-1.5 w-1.5 flex-shrink-0 rounded-full bg-accent" />
                   {h}
                 </li>
               ))}
@@ -112,14 +111,14 @@ export default function ProjectPage({ params }: Props) {
           </div>
 
           <div>
-            <h2 className="font-display text-2xl font-semibold tracking-tight">
+            <h2 className="font-display text-2xl font-semibold md:text-[28px]">
               Impact
             </h2>
             <ul className="mt-4 grid gap-3 sm:grid-cols-2">
               {project.impact.map((i) => (
                 <li
                   key={i}
-                  className="rounded-xl border border-border bg-surface p-4 text-sm leading-relaxed text-subtle"
+                  className="card p-4 text-sm leading-relaxed text-subtle"
                 >
                   {i}
                 </li>
@@ -132,7 +131,7 @@ export default function ProjectPage({ params }: Props) {
               <Link
                 key={o.slug}
                 href={`/projects/${o.slug}`}
-                className="group flex items-center justify-between gap-3 rounded-2xl border border-border bg-surface p-4 transition-colors hover:border-brand-500/50"
+                className="card group flex items-center justify-between gap-3 p-4 transition-colors hover:border-accent"
               >
                 <div>
                   <p className="text-xs uppercase tracking-wider text-muted">
@@ -143,7 +142,7 @@ export default function ProjectPage({ params }: Props) {
                   </p>
                   <p className="text-sm text-muted">{o.tagline}</p>
                 </div>
-                <ArrowUpRight className="h-5 w-5 flex-shrink-0 text-muted transition-all group-hover:text-brand-500" />
+                <ArrowUpRight className="h-5 w-5 flex-shrink-0 text-muted transition-all group-hover:text-accent" />
               </Link>
             ))}
           </div>
@@ -156,7 +155,7 @@ export default function ProjectPage({ params }: Props) {
 function Section({ title, body }: { title: string; body: string }) {
   return (
     <div>
-      <h2 className="font-display text-2xl font-semibold tracking-tight">
+      <h2 className="font-display text-2xl font-semibold md:text-[28px]">
         {title}
       </h2>
       <p className="mt-3 text-base leading-relaxed text-subtle md:text-lg">

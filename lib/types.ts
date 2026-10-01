@@ -8,6 +8,10 @@ export type Profile = {
   name: string;
   firstName: string;
   title: string;
+  /** Hero headline, one entry per line. */
+  headline: string[];
+  /** Path under /public for the hero portrait; initials are shown when unset. */
+  photo?: string;
   tagline: string;
   bio: string;
   location: string;

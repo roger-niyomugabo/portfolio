@@ -13,47 +13,41 @@ export function Footer() {
   const year = new Date().getFullYear();
 
   return (
-    <footer className="mt-24 border-t border-border bg-surface/40">
+    <footer className="mt-16 border-t border-border">
       <div className="container py-14">
         <div className="grid gap-10 md:grid-cols-3">
           <div>
-            <Link
-              href="/"
-              className="flex items-center gap-2 font-display text-lg font-semibold"
-            >
-              <span className="grid h-8 w-8 place-items-center rounded-lg bg-gradient-to-br from-brand-500 to-accent-500 text-white shadow-md">
-                R
-              </span>
+            <Link href="/" className="font-display text-2xl font-semibold">
               {profile.name}
             </Link>
-            <p className="mt-3 max-w-xs text-sm text-subtle">
+            <p className="mt-3 max-w-xs text-sm leading-relaxed text-subtle">
               {profile.title} based in {profile.location}. Building production
               software end-to-end.
             </p>
           </div>
 
           <div>
-            <h3 className="font-display text-sm font-semibold uppercase tracking-wider text-muted">
+            <h3 className="text-xs font-medium uppercase tracking-wider text-muted">
               Navigate
             </h3>
-            <ul className="mt-4 space-y-2 text-sm text-subtle">
+            <ul className="mt-4 space-y-2 text-base">
               <li>
-                <Link className="hover:text-fg" href="/#about">
+                <Link className="hover:underline" href="/#about">
                   About
                 </Link>
               </li>
               <li>
-                <Link className="hover:text-fg" href="/projects">
-                  Projects
+                <Link className="hover:underline" href="/projects">
+                  Work
                 </Link>
               </li>
               <li>
-                <Link className="hover:text-fg" href="/blog">
+                <Link className="hover:underline" href="/blog">
                   Blog
                 </Link>
               </li>
               <li>
-                <Link className="hover:text-fg" href="/#contact">
+                <Link className="hover:underline" href="/#contact">
                   Contact
                 </Link>
               </li>
@@ -61,7 +55,7 @@ export function Footer() {
           </div>
 
           <div>
-            <h3 className="font-display text-sm font-semibold uppercase tracking-wider text-muted">
+            <h3 className="text-xs font-medium uppercase tracking-wider text-muted">
               Connect
             </h3>
             <ul className="mt-4 flex flex-wrap gap-2">
@@ -75,7 +69,7 @@ export function Footer() {
                       target={s.href.startsWith("http") ? "_blank" : undefined}
                       rel="noreferrer noopener"
                       aria-label={s.label}
-                      className="grid h-10 w-10 place-items-center rounded-full border border-border bg-bg transition-colors hover:border-brand-500 hover:text-brand-500"
+                      className="btn btn-outline h-10 w-10 p-0"
                     >
                       <Icon className="h-4 w-4" />
                     </Link>

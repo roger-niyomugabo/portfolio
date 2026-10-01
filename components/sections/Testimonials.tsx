@@ -18,14 +18,14 @@ export function Testimonials() {
   return (
     <Section
       id="testimonials"
-      eyebrow="Kind words"
+      heading="praise."
       title={<>What collaborators say.</>}
       description="People I've shipped with — managers, peers, partners, and folks I've mentored."
     >
-      <div className="relative mx-auto max-w-3xl">
-        <div className="rounded-2xl border border-border bg-surface p-8 md:p-12">
+      <div className="relative max-w-3xl">
+        <div className="card p-8 md:p-12">
           <Quote
-            className="mb-6 h-10 w-10 text-brand-500/40"
+            className="mb-6 h-10 w-10 fill-accent text-accent"
             aria-hidden
           />
           <AnimatePresence mode="wait">
@@ -35,15 +35,15 @@ export function Testimonials() {
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0, y: -10 }}
               transition={{ duration: 0.35 }}
-              className="text-lg leading-relaxed text-fg md:text-xl"
+              className="text-lg font-medium leading-relaxed text-fg md:text-xl md:leading-relaxed"
             >
               &ldquo;{current.quote}&rdquo;
             </motion.blockquote>
           </AnimatePresence>
 
-          <div className="mt-8 flex items-center justify-between">
+          <div className="mt-8 flex items-center justify-between gap-4">
             <div className="flex items-center gap-3">
-              <span className="grid h-12 w-12 place-items-center rounded-full bg-gradient-to-br from-brand-500 to-accent-500 font-display text-sm font-semibold text-white">
+              <span className="icon-tile h-12 w-12 rounded-full font-display text-sm font-semibold">
                 {current.initials}
               </span>
               <div>
@@ -59,7 +59,7 @@ export function Testimonials() {
                 type="button"
                 aria-label="Previous testimonial"
                 onClick={() => go(-1)}
-                className="grid h-10 w-10 place-items-center rounded-full border border-border bg-bg transition-colors hover:border-brand-500 hover:text-brand-500"
+                className="btn btn-outline h-10 w-10 p-0"
               >
                 <ChevronLeft className="h-4 w-4" />
               </button>
@@ -67,7 +67,7 @@ export function Testimonials() {
                 type="button"
                 aria-label="Next testimonial"
                 onClick={() => go(1)}
-                className="grid h-10 w-10 place-items-center rounded-full border border-border bg-bg transition-colors hover:border-brand-500 hover:text-brand-500"
+                className="btn btn-outline h-10 w-10 p-0"
               >
                 <ChevronRight className="h-4 w-4" />
               </button>
@@ -75,16 +75,14 @@ export function Testimonials() {
           </div>
         </div>
 
-        <div className="mt-5 flex justify-center gap-2">
+        <div className="mt-5 flex gap-2">
           {testimonials.map((t, i) => (
             <button
               key={t.name}
               aria-label={`Show testimonial from ${t.name}`}
               onClick={() => setIndex(i)}
               className={`h-1.5 rounded-full transition-all ${
-                i === index
-                  ? "w-8 bg-brand-500"
-                  : "w-1.5 bg-border hover:bg-muted"
+                i === index ? "w-8 bg-accent" : "w-1.5 bg-border hover:bg-muted"
               }`}
             />
           ))}

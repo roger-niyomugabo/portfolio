@@ -27,7 +27,7 @@ function renderBody(body: string) {
       return (
         <h2
           key={i}
-          className="mt-10 font-display text-2xl font-semibold tracking-tight text-fg"
+          className="mt-10 font-display text-2xl font-semibold text-fg md:text-[28px]"
         >
           {block.slice(3)}
         </h2>
@@ -75,15 +75,15 @@ export default function BlogPostPage({ params }: Props) {
             </span>
           </div>
 
-          <h1 className="font-display text-3xl font-bold leading-tight tracking-tight md:text-5xl">
+          <h1 className="font-display text-3xl font-extrabold leading-tight md:text-5xl md:leading-tight">
             {post.title}
           </h1>
 
-          <p className="mt-4 text-lg text-subtle md:text-xl">{post.excerpt}</p>
+          <p className="mt-4 text-lg font-medium md:text-2xl md:leading-relaxed">{post.excerpt}</p>
 
           <div className="mt-5 flex flex-wrap gap-1.5">
             {post.tags.map((t) => (
-              <Badge key={t} tone="brand">
+              <Badge key={t} tone="accent">
                 {t}
               </Badge>
             ))}
@@ -93,7 +93,7 @@ export default function BlogPostPage({ params }: Props) {
             {renderBody(post.body)}
           </div>
 
-          <div className="mt-16 rounded-2xl border border-border bg-surface p-6 text-center md:p-10">
+          <div className="card mt-16 p-6 md:p-10">
             <p className="font-display text-xl font-semibold">
               Like this kind of writing?
             </p>
@@ -103,7 +103,7 @@ export default function BlogPostPage({ params }: Props) {
             </p>
             <Link
               href="/#contact"
-              className="mt-5 inline-flex items-center gap-2 rounded-full bg-fg px-5 py-2.5 text-sm font-medium text-bg transition-opacity hover:opacity-90"
+              className="btn btn-primary mt-5"
             >
               Get in touch
             </Link>

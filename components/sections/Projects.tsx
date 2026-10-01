@@ -17,7 +17,7 @@ export function Projects({
   return (
     <Section
       id="projects"
-      eyebrow={heading ? "Projects" : undefined}
+      heading={heading ? "work." : undefined}
       title={heading ? <>Selected work.</> : undefined}
       description={
         heading
@@ -30,16 +30,13 @@ export function Projects({
           <Reveal key={p.slug} delay={idx * 0.05}>
             <Link
               href={`/projects/${p.slug}`}
-              className="group relative flex h-full flex-col overflow-hidden rounded-2xl border border-border bg-surface transition-all hover:-translate-y-0.5 hover:border-brand-500/50 hover:shadow-xl hover:shadow-brand-500/5"
+              className="card group flex h-full flex-col overflow-hidden transition-all hover:-translate-y-1 hover:border-accent"
             >
-              <div
-                className={`relative h-48 bg-gradient-to-br ${p.cover.from} ${p.cover.to} overflow-hidden`}
-              >
-                <div className="absolute inset-0 bg-grid-pattern bg-[size:24px_24px] opacity-30" />
-                <span className="absolute inset-0 grid place-items-center text-7xl drop-shadow-lg">
+              <div className="accent-panel relative h-48 border-b border-border">
+                <span className="absolute inset-0 grid place-items-center text-7xl">
                   {p.cover.emoji}
                 </span>
-                <span className="absolute right-4 top-4 inline-flex items-center gap-1 rounded-full bg-black/30 px-2.5 py-1 text-xs font-medium text-white backdrop-blur">
+                <span className="absolute right-4 top-4 rounded-[4px] bg-ink px-2.5 py-1 text-xs font-medium text-accent">
                   {p.year}
                 </span>
               </div>
@@ -48,10 +45,10 @@ export function Projects({
                   <h3 className="font-display text-xl font-semibold">
                     {p.title}
                   </h3>
-                  <Badge tone="brand">{p.category}</Badge>
+                  <Badge tone="accent">{p.category}</Badge>
                 </div>
                 <p className="mb-4 text-sm text-muted">{p.tagline}</p>
-                <p className="mb-5 text-sm leading-relaxed text-subtle line-clamp-3">
+                <p className="mb-5 line-clamp-3 text-sm leading-relaxed text-subtle">
                   {p.description}
                 </p>
                 <div className="mb-5 flex flex-wrap gap-1.5">
@@ -62,7 +59,7 @@ export function Projects({
                     <Badge>+{p.stack.length - 5}</Badge>
                   )}
                 </div>
-                <span className="mt-auto inline-flex items-center gap-1.5 text-sm font-medium text-brand-500 transition-all group-hover:gap-2.5">
+                <span className="mt-auto inline-flex items-center gap-1.5 text-sm font-semibold transition-all group-hover:gap-2.5">
                   Read case study
                   <ArrowUpRight className="h-4 w-4" />
                 </span>
@@ -73,11 +70,8 @@ export function Projects({
       </div>
 
       {!showAll && (
-        <div className="mt-10 text-center">
-          <Link
-            href="/projects"
-            className="inline-flex items-center gap-2 rounded-full border border-border bg-surface px-5 py-2.5 text-sm font-medium text-fg transition-colors hover:border-brand-500 hover:text-brand-500"
-          >
+        <div className="mt-10">
+          <Link href="/projects" className="btn btn-outline">
             See all projects
             <ArrowUpRight className="h-4 w-4" />
           </Link>

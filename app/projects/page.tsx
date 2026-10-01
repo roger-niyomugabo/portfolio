@@ -10,15 +10,12 @@ export const metadata: Metadata = {
 export default function ProjectsPage() {
   return (
     <div className="pt-24">
-      <div className="container pt-12 text-center">
-        <p className="mb-3 inline-flex items-center gap-2 rounded-full border border-border bg-surface px-3 py-1 text-xs font-medium uppercase tracking-wider text-brand-500">
-          <span className="inline-block h-1.5 w-1.5 rounded-full bg-brand-500" />
-          Portfolio
+      <div className="container pt-12">
+        <h1 className="section-word">work.</h1>
+        <p className="mt-5 font-display text-2xl font-semibold md:text-[28px] md:leading-snug">
+          All projects.
         </p>
-        <h1 className="font-display text-4xl font-bold tracking-tight md:text-5xl">
-          All <span className="gradient-text">projects</span>.
-        </h1>
-        <p className="mx-auto mt-4 max-w-2xl text-base text-subtle md:text-lg">
+        <p className="mt-3 max-w-3xl text-base leading-relaxed text-subtle md:text-lg md:leading-relaxed">
           Production work, side projects, and platform pieces I&apos;ve owned
           end-to-end. Click any card for a deeper case study.
         </p>

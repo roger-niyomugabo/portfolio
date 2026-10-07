@@ -13,6 +13,12 @@ const smtp = () => ({
 
 export const mailConfigured = () => Boolean(smtp().user && smtp().pass);
 
+export type MailAttachment = {
+  filename: string;
+  content: Buffer;
+  contentType?: string;
+};
+
 let transporter: Transporter | undefined;
 
 function getTransporter() {
@@ -25,13 +31,16 @@ function getTransporter() {
       auth: { user, pass },
       connectionTimeout: 10_000,
       greetingTimeout: 10_000,
-      socketTimeout: 20_000
+      socketTimeout: 60_000
     });
   }
   return transporter;
 }
 
-export async function sendContactEmail(values: ContactValues) {
+export async function sendContactEmail(
+  values: ContactValues,
+  attachments: MailAttachment[] = []
+) {
   const { user, to } = smtp();
   const info = await getTransporter().sendMail({
     from: { name: `${profile.name} — portfolio`, address: user! },
@@ -45,8 +54,12 @@ export async function sendContactEmail(values: ContactValues) {
       `Email:   ${values.email}`,
       `Subject: ${values.subject}`,
       "",
-      values.message
-    ].join("\n")
+      values.message,
+      ...(attachments.length
+        ? ["", `Attachments: ${attachments.map((a) => a.filename).join(", ")}`]
+        : [])
+    ].join("\n"),
+    attachments
   });
   return info.messageId;
 }

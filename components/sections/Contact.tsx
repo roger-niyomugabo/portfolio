@@ -1,14 +1,32 @@
 "use client";
 
-import { useState } from "react";
+import { useRef, useState } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import toast from "react-hot-toast";
-import { Github, Linkedin, Mail, MapPin, Phone, Send } from "lucide-react";
+import {
+  FileText,
+  Github,
+  Linkedin,
+  Mail,
+  MapPin,
+  Paperclip,
+  Phone,
+  Send,
+  X
+} from "lucide-react";
 import { Section } from "@/components/ui/Section";
 import { Reveal } from "@/components/ui/Reveal";
 import { profile } from "@/data/profile";
-import { contactSchema, type ContactValues } from "@/lib/contact";
+import {
+  ATTACHMENT_ACCEPT,
+  MAX_ATTACHMENTS,
+  MAX_ATTACHMENTS_MB,
+  attachmentProblem,
+  contactSchema,
+  type ContactValues
+} from "@/lib/contact";
+import { formatBytes } from "@/lib/utils";
 
 // Fallback when the site has no email credentials: hand the message to the visitor's mail app.
 function openMailClient(values: ContactValues) {
@@ -21,6 +39,9 @@ function openMailClient(values: ContactValues) {
 
 export function Contact() {
   const [submitting, setSubmitting] = useState(false);
+  const [files, setFiles] = useState<File[]>([]);
+  const [fileError, setFileError] = useState<string>();
+  const fileInput = useRef<HTMLInputElement>(null);
   const {
     register,
     handleSubmit,
@@ -28,22 +49,52 @@ export function Contact() {
     formState: { errors }
   } = useForm<ContactValues>({ resolver: zodResolver(contactSchema) });
 
+  const addFiles = (chosen: FileList | null) => {
+    const next = [...files];
+    for (const file of Array.from(chosen ?? [])) {
+      if (next.some((f) => f.name === file.name && f.size === file.size)) continue;
+      const problem = attachmentProblem(file, next);
+      if (problem) {
+        setFileError(problem);
+        return;
+      }
+      next.push(file);
+    }
+    setFileError(undefined);
+    setFiles(next);
+  };
+
+  const removeFile = (file: File) => {
+    setFiles((current) => current.filter((f) => f !== file));
+    setFileError(undefined);
+  };
+
   const onSubmit = async (values: ContactValues) => {
     setSubmitting(true);
     try {
-      const res = await fetch("/api/contact", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(values)
-      });
+      const body = new FormData();
+      body.append("name", values.name);
+      body.append("email", values.email);
+      body.append("subject", values.subject);
+      body.append("message", values.message);
+      body.append("honeypot", values.honeypot ?? "");
+      for (const file of files) body.append("attachments", file, file.name);
+
+      const res = await fetch("/api/contact", { method: "POST", body });
 
       if (res.ok) {
         toast.success("Message sent. I'll get back to you soon.");
         reset();
+        setFiles([]);
       } else if (res.status === 503) {
         openMailClient(values);
-        toast("Email isn't set up here yet, so I'm opening your email app instead.");
+        toast(
+          files.length
+            ? "Email isn't set up here yet, so I'm opening your email app instead. Please attach your files there."
+            : "Email isn't set up here yet, so I'm opening your email app instead."
+        );
         reset();
+        setFiles([]);
       } else {
         const data = (await res.json().catch(() => null)) as { error?: string } | null;
         toast.error(data?.error ?? "Something went wrong. Try emailing me directly.");
@@ -202,6 +253,66 @@ export function Contact() {
                   />
                 }
               />
+            </div>
+
+            <div className="mt-4">
+              <p className="mb-1.5 text-xs font-medium uppercase tracking-wider text-muted">
+                Attachments (optional)
+              </p>
+              <div className="rounded-[4px] border border-dashed border-border p-3">
+                <input
+                  ref={fileInput}
+                  type="file"
+                  multiple
+                  accept={ATTACHMENT_ACCEPT}
+                  className="hidden"
+                  onChange={(e) => {
+                    addFiles(e.target.files);
+                    e.target.value = "";
+                  }}
+                />
+                <div className="flex flex-wrap items-center gap-x-4 gap-y-2">
+                  <button
+                    type="button"
+                    onClick={() => fileInput.current?.click()}
+                    className="btn btn-outline"
+                  >
+                    <Paperclip className="h-4 w-4" />
+                    Add files
+                  </button>
+                  <span className="text-xs text-muted">
+                    Up to {MAX_ATTACHMENTS} files, {MAX_ATTACHMENTS_MB} MB in total:
+                    PDF, Office documents, text files or images.
+                  </span>
+                </div>
+                {files.length > 0 && (
+                  <ul className="mt-3 space-y-1.5">
+                    {files.map((file) => (
+                      <li
+                        key={`${file.name}-${file.size}`}
+                        className="flex items-center gap-2 text-sm"
+                      >
+                        <FileText className="h-4 w-4 flex-shrink-0 text-muted" />
+                        <span className="min-w-0 truncate">{file.name}</span>
+                        <span className="flex-shrink-0 text-xs text-muted">
+                          {formatBytes(file.size)}
+                        </span>
+                        <button
+                          type="button"
+                          aria-label={`Remove ${file.name}`}
+                          onClick={() => removeFile(file)}
+                          className="ml-auto inline-flex h-7 w-7 flex-shrink-0 items-center justify-center text-muted transition-colors hover:text-fg"
+                        >
+                          <X className="h-4 w-4" />
+                        </button>
+                      </li>
+                    ))}
+                  </ul>
+                )}
+              </div>
+              {fileError && (
+                <span className="mt-1 block text-xs text-red-500">{fileError}</span>
+              )}
             </div>
 
             {/* Spam trap: hidden from people, filled in by bots */}

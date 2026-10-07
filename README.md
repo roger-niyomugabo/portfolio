@@ -13,7 +13,7 @@ Personal portfolio site built with **Next.js 14 (App Router)**, **TypeScript**, 
 - **Projects** grid + dynamic case-study pages at `/projects/[slug]`
 - **Blog** index + post pages at `/blog/[slug]` with sample posts
 - **Testimonials** carousel with motion transitions
-- **Contact form** (react-hook-form + zod) — emails you via SMTP (see below), with a mail-client fallback until configured
+- **Contact form** (react-hook-form + zod) — emails you via SMTP (see below), attachments included, with a mail-client fallback until configured
 - **Dark / light mode** via `next-themes` (defaults to dark)
 - **SEO**: dynamic OG image, sitemap, robots, per-route metadata
 - **Accessibility**: keyboard-navigable, reduced-motion-aware, semantic landmarks
@@ -97,6 +97,8 @@ Submissions are sent to you by email through SMTP. Copy `.env.example` to `.env`
 - `SMTP_HOST` / `SMTP_PORT` (optional) — defaults are Gmail's (`smtp.gmail.com`, `465`).
 
 Add the same variables in your host's environment settings (for example the Vercel project settings) — `.env` files are not deployed. Each message arrives with the visitor's address as Reply-To, so you can answer directly. The API limits each visitor to 5 messages per 10 minutes and ignores bot submissions that fill the hidden field. Until the variables are set, the form falls back to opening the visitor's own email app.
+
+Visitors can attach up to 5 files (PDF, Office documents, text files or images) totalling 4 MB; they arrive as attachments on the email. The 4 MB cap keeps requests under Vercel's 4.5 MB function body limit — if you host elsewhere, raise `MAX_ATTACHMENTS_MB` in `lib/contact.ts`.
 
 ## Deployment
 

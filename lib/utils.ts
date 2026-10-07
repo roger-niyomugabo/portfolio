@@ -8,3 +8,9 @@ export function cn(...inputs: ClassValue[]) {
 export function formatDateRange(start: string, end: string) {
   return `${start} — ${end}`;
 }
+
+export function formatBytes(bytes: number) {
+  if (bytes < 1024) return `${bytes} B`;
+  if (bytes < 1024 * 1024) return `${Math.round(bytes / 1024)} KB`;
+  return `${(bytes / (1024 * 1024)).toFixed(1)} MB`;
+}

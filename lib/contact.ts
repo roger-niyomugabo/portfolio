@@ -23,3 +23,34 @@ export const contactSchema = z.object({
 });
 
 export type ContactValues = z.infer<typeof contactSchema>;
+
+// Attachments: documents and images only, small enough to stay under a Vercel
+// function's 4.5 MB request limit. Raise the total if you host elsewhere.
+export const MAX_ATTACHMENTS = 5;
+export const MAX_ATTACHMENTS_MB = 4;
+export const MAX_ATTACHMENTS_BYTES = MAX_ATTACHMENTS_MB * 1024 * 1024;
+export const ATTACHMENT_EXTENSIONS = [
+  "pdf", "doc", "docx", "xls", "xlsx", "ppt", "pptx", "odt", "ods", "odp",
+  "txt", "md", "csv", "rtf", "png", "jpg", "jpeg", "gif", "webp"
+];
+export const ATTACHMENT_ACCEPT = ATTACHMENT_EXTENSIONS.map((ext) => `.${ext}`).join(",");
+
+type FileLike = { name: string; size: number };
+
+// Why `file` can't be added to `accepted`, or null when it can.
+export function attachmentProblem(file: FileLike, accepted: FileLike[]) {
+  const parts = file.name.toLowerCase().split(".");
+  const ext = parts.length > 1 ? parts[parts.length - 1] : "";
+  if (!ATTACHMENT_EXTENSIONS.includes(ext)) {
+    return `${file.name}: only PDF, Office documents, text files and images are accepted.`;
+  }
+  if (file.size === 0) return `${file.name} is empty.`;
+  if (accepted.length >= MAX_ATTACHMENTS) {
+    return `You can attach up to ${MAX_ATTACHMENTS} files.`;
+  }
+  const total = accepted.reduce((sum, f) => sum + f.size, 0) + file.size;
+  if (total > MAX_ATTACHMENTS_BYTES) {
+    return `Attachments must total under ${MAX_ATTACHMENTS_MB} MB.`;
+  }
+  return null;
+}

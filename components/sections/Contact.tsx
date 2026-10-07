@@ -3,21 +3,21 @@
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { z } from "zod";
 import toast from "react-hot-toast";
 import { Github, Linkedin, Mail, MapPin, Phone, Send } from "lucide-react";
 import { Section } from "@/components/ui/Section";
 import { Reveal } from "@/components/ui/Reveal";
 import { profile } from "@/data/profile";
+import { contactSchema, type ContactValues } from "@/lib/contact";
 
-const schema = z.object({
-  name: z.string().min(2, "Please share your name"),
-  email: z.string().email("That doesn't look like a valid email"),
-  subject: z.string().min(3, "A short subject helps"),
-  message: z.string().min(10, "A few more words please")
-});
-
-type FormValues = z.infer<typeof schema>;
+// Fallback when the site has no email credentials: hand the message to the visitor's mail app.
+function openMailClient(values: ContactValues) {
+  const body = encodeURIComponent(
+    `${values.message}\n\n— ${values.name} <${values.email}>`
+  );
+  const subject = encodeURIComponent(values.subject);
+  window.location.href = `mailto:${profile.email}?subject=${subject}&body=${body}`;
+}
 
 export function Contact() {
   const [submitting, setSubmitting] = useState(false);
@@ -26,20 +26,29 @@ export function Contact() {
     handleSubmit,
     reset,
     formState: { errors }
-  } = useForm<FormValues>({ resolver: zodResolver(schema) });
+  } = useForm<ContactValues>({ resolver: zodResolver(contactSchema) });
 
-  const onSubmit = async (values: FormValues) => {
+  const onSubmit = async (values: ContactValues) => {
     setSubmitting(true);
     try {
-      // Open the user's mail client as a graceful fallback when no backend exists.
-      const body = encodeURIComponent(
-        `${values.message}\n\n— ${values.name} <${values.email}>`
-      );
-      const subject = encodeURIComponent(values.subject);
-      window.location.href = `mailto:${profile.email}?subject=${subject}&body=${body}`;
-      toast.success("Opening your email client…");
-      reset();
-    } catch (err) {
+      const res = await fetch("/api/contact", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(values)
+      });
+
+      if (res.ok) {
+        toast.success("Message sent. I'll get back to you soon.");
+        reset();
+      } else if (res.status === 503) {
+        openMailClient(values);
+        toast("Email isn't set up here yet, so I'm opening your email app instead.");
+        reset();
+      } else {
+        const data = (await res.json().catch(() => null)) as { error?: string } | null;
+        toast.error(data?.error ?? "Something went wrong. Try emailing me directly.");
+      }
+    } catch {
       toast.error("Something went wrong. Try emailing me directly.");
     } finally {
       setSubmitting(false);
@@ -194,6 +203,16 @@ export function Contact() {
                 }
               />
             </div>
+
+            {/* Spam trap: hidden from people, filled in by bots */}
+            <input
+              type="text"
+              tabIndex={-1}
+              autoComplete="off"
+              aria-hidden
+              {...register("honeypot")}
+              className="absolute left-[-9999px] h-px w-px opacity-0"
+            />
 
             <button
               type="submit"

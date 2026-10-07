@@ -13,7 +13,7 @@ Personal portfolio site built with **Next.js 14 (App Router)**, **TypeScript**, 
 - **Projects** grid + dynamic case-study pages at `/projects/[slug]`
 - **Blog** index + post pages at `/blog/[slug]` with sample posts
 - **Testimonials** carousel with motion transitions
-- **Contact form** (react-hook-form + zod) — opens the user's email client prefilled
+- **Contact form** (react-hook-form + zod) — emails you via SMTP (see below), with a mail-client fallback until configured
 - **Dark / light mode** via `next-themes` (defaults to dark)
 - **SEO**: dynamic OG image, sitemap, robots, per-route metadata
 - **Accessibility**: keyboard-navigable, reduced-motion-aware, semantic landmarks
@@ -26,7 +26,7 @@ Personal portfolio site built with **Next.js 14 (App Router)**, **TypeScript**, 
 - Framer Motion for transitions and reveals
 - lucide-react for icons
 - next-themes for theming
-- react-hook-form + zod for the contact form
+- react-hook-form + zod for the contact form, nodemailer to deliver it
 - react-hot-toast for feedback
 
 ## Getting started
@@ -49,6 +49,7 @@ app/
   globals.css          # Tailwind + CSS-variable tokens
   projects/            # /projects + /projects/[slug]
   blog/                # /blog + /blog/[slug]
+  api/contact/         # POST handler that emails form submissions
   not-found.tsx
   sitemap.ts
   robots.ts
@@ -70,6 +71,8 @@ data/
 lib/
   types.ts             # shared types
   utils.ts             # cn() and helpers
+  contact.ts           # contact form schema (shared by form and API)
+  mail.ts              # SMTP transport for contact messages
 public/
   Roger_Niyomugabo_FullStack_CV.pdf
 ```
@@ -83,6 +86,17 @@ All content lives in `data/` as typed TS modules. Edit those files to update the
 - Add or edit **projects** in `data/projects.ts` — each item drives both the home featured grid and a case-study page
 - Add **blog posts** in `data/blog.ts` — `body` supports plain paragraphs and `## Subheadings`
 - Replace **testimonials** in `data/testimonials.ts` with attributed quotes once you have permission
+
+## Contact form email
+
+Submissions are sent to you by email through SMTP. Copy `.env.example` to `.env` (or `.env.local`) and set:
+
+- `API_SENDER_EMAIL` — the account that sends the mail. With Gmail, turn on 2-Step Verification and create an App Password at https://myaccount.google.com/apppasswords.
+- `EMAIL_PASSWORD` — that App Password (or the SMTP password for another provider).
+- `CONTACT_TO_EMAIL` (optional) — where messages arrive; defaults to the email in `data/profile.ts`.
+- `SMTP_HOST` / `SMTP_PORT` (optional) — defaults are Gmail's (`smtp.gmail.com`, `465`).
+
+Add the same variables in your host's environment settings (for example the Vercel project settings) — `.env` files are not deployed. Each message arrives with the visitor's address as Reply-To, so you can answer directly. The API limits each visitor to 5 messages per 10 minutes and ignores bot submissions that fill the hidden field. Until the variables are set, the form falls back to opening the visitor's own email app.
 
 ## Deployment
 

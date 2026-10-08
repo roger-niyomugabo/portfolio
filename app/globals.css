@@ -74,6 +74,11 @@ body {
     font-size: clamp(2.75rem, 9vw, 6rem);
   }
 
+  /* Small monospace label: section numbers, field names, kickers */
+  .section-index {
+    @apply font-mono text-xs uppercase tracking-[0.25em] text-muted;
+  }
+
   .btn {
     @apply inline-flex items-center justify-center gap-2 rounded-[4px] border px-6 py-2.5 text-base transition-all duration-200 disabled:opacity-60;
   }
@@ -100,6 +105,11 @@ body {
     @apply grid flex-shrink-0 place-items-center rounded-[4px] border border-accent/25 bg-accent/10 text-accent;
   }
 
+  /* Floating status pill (hero, contact) */
+  .chip {
+    @apply inline-flex items-center gap-2 rounded-[4px] border border-border bg-bg/80 px-3 py-2 text-xs font-medium shadow-lg shadow-black/10 backdrop-blur;
+  }
+
   /* Deep green gradient for large surfaces (hero portrait, project covers) */
   .accent-panel {
     background-image: linear-gradient(135deg, #2c806e 0%, #16623e 100%);
@@ -109,6 +119,79 @@ body {
   .field {
     @apply w-full rounded-[4px] border border-border bg-bg px-3.5 py-2.5 text-base outline-none ring-accent/30 transition placeholder:text-muted focus:border-accent focus:ring-2;
   }
+
+  /* Text link whose underline slides in from the left */
+  .link-slide {
+    background-image: linear-gradient(currentColor, currentColor);
+    background-size: 0% 1px;
+    background-position: 0 100%;
+    background-repeat: no-repeat;
+    transition: background-size 0.45s cubic-bezier(0.22, 1, 0.36, 1);
+  }
+  .link-slide:hover {
+    background-size: 100% 1px;
+  }
+
+  /* Surface that lights up under the pointer (SpotlightCard sets --x/--y) */
+  .spot {
+    @apply relative overflow-hidden;
+  }
+  .spot::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(
+      340px circle at var(--x, 50%) var(--y, 50%),
+      rgb(var(--accent) / 0.14),
+      transparent 60%
+    );
+    opacity: 0;
+    transition: opacity 0.35s;
+    pointer-events: none;
+  }
+  .spot:hover::before {
+    opacity: 1;
+  }
+
+  /* Soft green light behind a section; parent must be positioned */
+  .glow {
+    @apply pointer-events-none absolute rounded-full blur-3xl;
+    background: radial-gradient(closest-side, rgb(var(--accent) / 0.22), transparent);
+  }
+}
+
+/* Film grain over the whole page, for depth */
+.grain {
+  position: fixed;
+  inset: 0;
+  z-index: 60;
+  pointer-events: none;
+  opacity: 0.045;
+  mix-blend-mode: overlay;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  background-size: 200px 200px;
+}
+.dark .grain {
+  opacity: 0.07;
+}
+
+/* Infinite horizontal ticker (see Marquee) */
+@keyframes marquee {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-50%);
+  }
+}
+.marquee-track {
+  animation: marquee var(--marquee-duration, 40s) linear infinite;
+}
+.marquee-track[data-reverse] {
+  animation-direction: reverse;
+}
+.marquee:hover .marquee-track {
+  animation-play-state: paused;
 }
 
 /* Cross-fade when the theme is toggled (started in ThemeToggle) */

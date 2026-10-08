@@ -3,7 +3,9 @@ import { ArrowUpRight } from "lucide-react";
 import { Section } from "@/components/ui/Section";
 import { Reveal } from "@/components/ui/Reveal";
 import { Badge } from "@/components/ui/Badge";
+import { ProjectVisual } from "@/components/ui/ProjectVisual";
 import { projects } from "@/data/projects";
+import { cn } from "@/lib/utils";
 
 export function Projects({
   showAll = false,
@@ -17,6 +19,7 @@ export function Projects({
   return (
     <Section
       id="projects"
+      index={heading ? "05" : undefined}
       heading={heading ? "work." : undefined}
       title={heading ? <>Selected work.</> : undefined}
       description={
@@ -25,54 +28,54 @@ export function Projects({
           : undefined
       }
     >
-      <div className="grid gap-5 md:grid-cols-2">
-        {list.map((p, idx) => (
-          <Reveal key={p.slug} delay={idx * 0.05}>
-            <Link
-              href={`/projects/${p.slug}`}
-              className="card group flex h-full flex-col overflow-hidden transition-all hover:-translate-y-1 hover:border-accent"
-            >
-              <div className="accent-panel relative h-48 border-b border-border">
-                <span className="absolute inset-0 grid place-items-center text-7xl">
-                  {p.cover.emoji}
-                </span>
-                <span className="absolute right-4 top-4 rounded-[4px] bg-ink px-2.5 py-1 text-xs font-medium text-accent">
-                  {p.year}
-                </span>
-              </div>
-              <div className="flex flex-1 flex-col p-6">
-                <div className="mb-2 flex items-center justify-between gap-3">
-                  <h3 className="font-display text-xl font-semibold">
-                    {p.title}
+      <div className="space-y-20 md:space-y-28">
+        {list.map((project, idx) => {
+          const flip = idx % 2 === 1;
+          const href = `/projects/${project.slug}`;
+          return (
+            <Reveal key={project.slug}>
+              <article className="grid items-center gap-8 lg:grid-cols-12 lg:gap-12">
+                <Link
+                  href={href}
+                  aria-label={`${project.title} case study`}
+                  className={cn("group block lg:col-span-7", flip && "lg:order-2")}
+                >
+                  <ProjectVisual
+                    project={project}
+                    className="aspect-[4/3] rounded-lg border border-border transition-transform duration-500 group-hover:scale-[1.01] sm:aspect-[16/10]"
+                  />
+                </Link>
+                <div className={cn("lg:col-span-5", flip && "lg:order-1")}>
+                  <p className="section-index">
+                    {String(idx + 1).padStart(2, "0")} — {project.category} · {project.year}
+                  </p>
+                  <h3 className="mt-4 font-display text-3xl font-semibold md:text-4xl">
+                    <Link href={href} className="link-slide">
+                      {project.title}
+                    </Link>
                   </h3>
-                  <Badge tone="accent">{p.category}</Badge>
+                  <p className="mt-2 text-lg text-subtle">{project.tagline}</p>
+                  <p className="mt-5 leading-relaxed text-subtle">{project.description}</p>
+                  <div className="mt-5 flex flex-wrap gap-1.5">
+                    {project.stack.map((tech) => (
+                      <Badge key={tech}>{tech}</Badge>
+                    ))}
+                  </div>
+                  <Link href={href} className="btn btn-outline mt-8">
+                    Read case study
+                    <ArrowUpRight className="h-4 w-4" />
+                  </Link>
                 </div>
-                <p className="mb-4 text-sm text-muted">{p.tagline}</p>
-                <p className="mb-5 line-clamp-3 text-sm leading-relaxed text-subtle">
-                  {p.description}
-                </p>
-                <div className="mb-5 flex flex-wrap gap-1.5">
-                  {p.stack.slice(0, 5).map((s) => (
-                    <Badge key={s}>{s}</Badge>
-                  ))}
-                  {p.stack.length > 5 && (
-                    <Badge>+{p.stack.length - 5}</Badge>
-                  )}
-                </div>
-                <span className="mt-auto inline-flex items-center gap-1.5 text-sm font-semibold transition-all group-hover:gap-2.5">
-                  Read case study
-                  <ArrowUpRight className="h-4 w-4" />
-                </span>
-              </div>
-            </Link>
-          </Reveal>
-        ))}
+              </article>
+            </Reveal>
+          );
+        })}
       </div>
 
       {!showAll && (
-        <div className="mt-10">
+        <div className="mt-16">
           <Link href="/projects" className="btn btn-outline">
-            See all projects
+            All projects ({projects.length})
             <ArrowUpRight className="h-4 w-4" />
           </Link>
         </div>

@@ -1,5 +1,3 @@
-"use client";
-
 import {
   Code2,
   Monitor,
@@ -9,10 +7,10 @@ import {
   CheckCircle2,
   type LucideIcon
 } from "lucide-react";
-import { motion } from "framer-motion";
 import { Section } from "@/components/ui/Section";
 import { Reveal } from "@/components/ui/Reveal";
 import { skillGroups } from "@/data/skills";
+import { cn } from "@/lib/utils";
 
 const iconMap: Record<string, LucideIcon> = {
   code: Code2,
@@ -23,54 +21,49 @@ const iconMap: Record<string, LucideIcon> = {
   check: CheckCircle2
 };
 
+// Tools at or above this level are the ones used day to day.
+const DAILY = 88;
+
 export function Skills() {
   return (
     <Section
       id="skills"
-      heading="skills."
+      index="03"
+      heading="stack."
+      layout="sticky"
       title={<>The toolbox, organized.</>}
-      description="Languages, frameworks, and tools I reach for daily — grouped by where they live in the stack."
+      description="Grouped by where it lives in the stack. The highlighted tools are the ones I reach for every day."
+      aside={
+        <p className="mt-8 flex items-center gap-2 text-sm text-muted">
+          <span className="inline-block h-3 w-6 rounded-[3px] border border-accent/50 bg-accent/10" />
+          daily driver
+        </p>
+      }
     >
-      <div className="grid gap-5 md:grid-cols-2 lg:grid-cols-3">
+      <div className="grid gap-x-10 gap-y-10 sm:grid-cols-2">
         {skillGroups.map((group, idx) => {
           const Icon = iconMap[group.icon] ?? Code2;
           return (
-            <Reveal key={group.name} delay={idx * 0.05}>
-              <div className="card h-full p-6 transition-colors hover:border-accent">
-                <div className="mb-5 flex items-center gap-3">
-                  <span className="icon-tile h-10 w-10">
-                    <Icon className="h-5 w-5" />
+            <Reveal key={group.name} delay={idx * 0.04}>
+              <div className="border-t border-border pt-5">
+                <div className="flex items-center gap-3">
+                  <span className="icon-tile h-9 w-9">
+                    <Icon className="h-4 w-4" />
                   </span>
-                  <h3 className="font-display text-lg font-semibold">
-                    {group.name}
-                  </h3>
+                  <h3 className="font-display text-lg font-semibold">{group.name}</h3>
                 </div>
-                <ul className="space-y-3">
+                <ul className="mt-4 flex flex-wrap gap-2">
                   {group.items.map((item) => (
-                    <li key={item.name}>
-                      <div className="mb-1 flex items-center justify-between text-sm">
-                        <span className="font-medium text-fg">{item.name}</span>
-                        {item.level !== undefined && (
-                          <span className="text-xs text-muted">
-                            {item.level}%
-                          </span>
-                        )}
-                      </div>
-                      {item.level !== undefined && (
-                        <div className="h-1.5 w-full overflow-hidden rounded-full bg-fg/10">
-                          <motion.div
-                            initial={{ width: 0 }}
-                            whileInView={{ width: `${item.level}%` }}
-                            viewport={{ once: true, margin: "-40px" }}
-                            transition={{
-                              duration: 1.1,
-                              ease: [0.22, 1, 0.36, 1],
-                              delay: 0.1
-                            }}
-                            className="h-full rounded-full bg-accent"
-                          />
-                        </div>
+                    <li
+                      key={item.name}
+                      className={cn(
+                        "rounded-[4px] border px-2.5 py-1 text-sm",
+                        (item.level ?? 0) >= DAILY
+                          ? "border-accent/50 bg-accent/10 font-medium text-fg"
+                          : "border-border text-subtle"
                       )}
+                    >
+                      {item.name}
                     </li>
                   ))}
                 </ul>

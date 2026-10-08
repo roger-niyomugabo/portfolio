@@ -4,15 +4,15 @@ Personal portfolio site built with **Next.js 14 (App Router)**, **TypeScript**, 
 
 ## Highlights
 
-- **Hero** with animated role rotator, gradient typography, and a tech-stack marquee
-- **About** with quick facts and CV download
-- **Animated stats** counters (years, projects, mentees, industries)
-- **Services** — what I help teams ship
-- **Skills** with categorized progress bars
-- **Experience timeline** with alternating cards on desktop
-- **Projects** grid + dynamic case-study pages at `/projects/[slug]`
-- **Blog** index + post pages at `/blog/[slug]` with sample posts
-- **Testimonials** carousel with motion transitions
+- **Hero** with a word-by-word headline reveal, floating status chips (availability, live Kigali time), a magnetic CTA and a tech ticker
+- **About** with a sticky intro column and a bento grid: current role, animated stats, local time
+- **Services** as an editorial numbered list
+- **Stack** grouped by layer, with daily drivers highlighted
+- **Experience** as an expandable, keyboard-friendly timeline
+- **Work** showcase rows with generated product mockups (browser / phone / terminal) + case-study pages at `/projects/[slug]`
+- **Blog** list + post pages at `/blog/[slug]` with sample posts
+- **Testimonials** as a full-bleed marquee
+- **Section rail** on wide screens that tracks the section in view, film-grain overlay, pointer-spotlight cards
 - **Contact form** (react-hook-form + zod) — emails you via SMTP (see below), attachments included, with a mail-client fallback until configured
 - **Dark / light mode** via `next-themes` (defaults to dark)
 - **SEO**: dynamic OG image, sitemap, robots, per-route metadata
@@ -56,9 +56,11 @@ app/
   opengraph-image.tsx
 components/
   layout/              # Navbar, Footer, ThemeProvider, ThemeToggle, ScrollProgress
-  sections/            # Hero, About, Skills, Services, Experience, Stats,
+  layout/              # ... plus SectionRail (home-page section index)
+  sections/            # Hero, About, Skills, Services, Experience,
                        # Projects, Testimonials, BlogTeaser, Contact
-  ui/                  # Section, Reveal, Counter, Badge
+  ui/                  # Section, Reveal, Counter, Badge, Marquee, TextReveal,
+                       # Magnetic, SpotlightCard, LocalTime, ProjectVisual
 data/
   profile.ts           # name, contact, socials
   experience.ts        # roles + bullets

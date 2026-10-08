@@ -3,6 +3,7 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import { ArrowLeft, ArrowUpRight, Calendar, Tag } from "lucide-react";
 import { Badge } from "@/components/ui/Badge";
+import { ProjectVisual } from "@/components/ui/ProjectVisual";
 import { projects, getProject } from "@/data/projects";
 
 type Props = { params: { slug: string } };
@@ -28,13 +29,7 @@ export default function ProjectPage({ params }: Props) {
 
   return (
     <article className="pt-24">
-      <div
-        className="accent-panel relative h-72 overflow-hidden md:h-96"
-      >
-        <span className="absolute inset-0 grid place-items-center text-8xl md:text-9xl">
-          {project.cover.emoji}
-        </span>
-      </div>
+      <ProjectVisual project={project} className="h-72 md:h-96" />
 
       <div className="container relative -mt-16 md:-mt-20">
         <div className="card mx-auto max-w-3xl p-6 md:p-10">

@@ -28,6 +28,8 @@ export function Navbar() {
   const [scrolled, setScrolled] = useState(false);
   const [open, setOpen] = useState(false);
   const pathname = usePathname();
+  const isCurrent = (href: string) =>
+    href !== "/" && !href.includes("#") && pathname.startsWith(href);
   const menuButtonRef = useRef<HTMLButtonElement>(null);
 
   useEffect(() => {
@@ -95,7 +97,11 @@ export function Navbar() {
               <li key={link.href}>
                 <Link
                   href={link.href}
-                  className="relative text-lg after:absolute after:-bottom-1 after:left-0 after:h-0.5 after:w-0 after:bg-accent after:transition-all hover:after:w-full"
+                  aria-current={isCurrent(link.href) ? "page" : undefined}
+                  className={cn(
+                    "relative text-lg after:absolute after:-bottom-1 after:left-0 after:h-0.5 after:w-0 after:bg-accent after:transition-all hover:after:w-full",
+                    isCurrent(link.href) && "after:w-full"
+                  )}
                 >
                   {link.label}
                 </Link>
@@ -143,7 +149,8 @@ export function Navbar() {
                   <Link
                     href={link.href}
                     onClick={() => setOpen(false)}
-                    className="block py-2.5 text-lg"
+                    aria-current={isCurrent(link.href) ? "page" : undefined}
+                    className={cn("block py-2.5 text-lg", isCurrent(link.href) && "text-accent")}
                   >
                     {link.label}
                   </Link>

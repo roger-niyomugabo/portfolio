@@ -1,103 +1,102 @@
-import { Briefcase, Calendar, MapPin } from "lucide-react";
+"use client";
+
+import { useState } from "react";
+import { AnimatePresence, motion } from "framer-motion";
+import { ChevronDown, MapPin } from "lucide-react";
 import { Section } from "@/components/ui/Section";
-import { Reveal } from "@/components/ui/Reveal";
 import { Badge } from "@/components/ui/Badge";
 import { experiences } from "@/data/experience";
+import { cn } from "@/lib/utils";
 
 export function Experience() {
+  const [openIndex, setOpenIndex] = useState(0);
+
   return (
     <Section
       id="experience"
+      index="04"
       heading="experience."
       title={<>Roles and what I shipped.</>}
-      description="A timeline of where I've worked, what I owned, and the kinds of problems I helped solve."
+      description="Where I've worked, what I owned, and the kinds of problems I helped solve. Open a role for the details."
     >
-      <ol className="relative mx-auto max-w-4xl">
-        <span
-          aria-hidden
-          className="absolute left-4 top-2 h-full w-px bg-border md:left-1/2"
-        />
-
-        {experiences.map((exp, idx) => (
-          <li
-            key={`${exp.company}-${exp.start}`}
-            className="relative mb-10 last:mb-0"
-          >
-            <Reveal>
-              <div className="md:grid md:grid-cols-2 md:gap-10">
-                {/* Timeline dot */}
-                <span
-                  aria-hidden
-                  className="absolute left-4 top-6 -translate-x-1/2 md:left-1/2"
-                >
-                  <span className="relative grid h-4 w-4 place-items-center">
-                    {exp.current && (
-                      <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-accent opacity-40" />
+      <ol className="border-t border-border">
+        {experiences.map((exp, idx) => {
+          const open = idx === openIndex;
+          const panelId = `experience-${idx}`;
+          return (
+            <li key={`${exp.company}-${exp.start}`} className="border-b border-border">
+              <button
+                type="button"
+                aria-expanded={open}
+                aria-controls={panelId}
+                onClick={() => setOpenIndex(open ? -1 : idx)}
+                className="grid w-full grid-cols-[1fr_auto] items-start gap-x-4 gap-y-1 py-6 text-left md:grid-cols-[12rem_1fr_auto] md:items-center md:gap-x-8 md:py-7"
+              >
+                <span className="font-mono text-xs uppercase tracking-[0.15em] text-muted md:text-sm">
+                  {exp.start} — {exp.end}
+                </span>
+                <ChevronDown
+                  className={cn(
+                    "row-span-2 h-5 w-5 self-center transition-transform duration-300 md:row-span-1",
+                    open ? "rotate-180 text-accent" : "text-muted"
+                  )}
+                />
+                <span className="md:col-start-2 md:row-start-1">
+                  <span
+                    className={cn(
+                      "block font-display text-xl font-semibold transition-colors md:text-2xl",
+                      open && "text-accent"
                     )}
-                    <span className="relative h-3 w-3 rounded-full border-2 border-bg bg-accent" />
+                  >
+                    {exp.role}
+                  </span>
+                  <span className="mt-1 block text-subtle">
+                    {exp.company} · {exp.type}
                   </span>
                 </span>
+              </button>
 
-                {/* Card — alternating sides on desktop */}
-                <div
-                  className={
-                    idx % 2 === 0
-                      ? "pl-12 md:pl-0 md:pr-12 md:text-right"
-                      : "pl-12 md:col-start-2 md:pl-12"
-                  }
-                >
-                  <div className="card p-6 transition-colors hover:border-accent">
-                    <div
-                      className={`mb-2 flex flex-wrap items-center gap-2 text-xs text-muted ${
-                        idx % 2 === 0 ? "md:justify-end" : ""
-                      }`}
-                    >
-                      <span className="inline-flex items-center gap-1">
-                        <Calendar className="h-3 w-3" />
-                        {exp.start} — {exp.end}
-                      </span>
-                      <span className="inline-flex items-center gap-1">
-                        <MapPin className="h-3 w-3" />
-                        {exp.location}
-                      </span>
-                      {exp.current && <Badge tone="accent">Current</Badge>}
+              <AnimatePresence initial={false}>
+                {open && (
+                  <motion.div
+                    id={panelId}
+                    key="panel"
+                    initial={{ height: 0, opacity: 0 }}
+                    animate={{ height: "auto", opacity: 1 }}
+                    exit={{ height: 0, opacity: 0 }}
+                    transition={{ duration: 0.4, ease: [0.22, 1, 0.36, 1] }}
+                    className="overflow-hidden"
+                  >
+                    <div className="grid gap-6 pb-8 md:grid-cols-[12rem_1fr] md:gap-8">
+                      <div className="flex flex-wrap items-center gap-2 text-sm text-muted md:flex-col md:items-start">
+                        <span className="inline-flex items-center gap-1.5">
+                          <MapPin className="h-3.5 w-3.5" />
+                          {exp.location}
+                        </span>
+                        {exp.current && <Badge tone="accent">Current</Badge>}
+                      </div>
+                      <div>
+                        <ul className="space-y-3 leading-relaxed text-subtle">
+                          {exp.highlights.map((highlight) => (
+                            <li key={highlight} className="flex items-start gap-3">
+                              <span className="mt-2.5 inline-block h-1 w-1 flex-shrink-0 rounded-full bg-accent" />
+                              {highlight}
+                            </li>
+                          ))}
+                        </ul>
+                        <div className="mt-6 flex flex-wrap gap-1.5">
+                          {exp.stack.map((tech) => (
+                            <Badge key={tech}>{tech}</Badge>
+                          ))}
+                        </div>
+                      </div>
                     </div>
-                    <h3 className="font-display text-lg font-semibold leading-tight">
-                      {exp.role}
-                    </h3>
-                    <p className="mt-1 text-sm font-medium">
-                      <span className="inline-flex items-center gap-1.5">
-                        <Briefcase className="h-3.5 w-3.5" />
-                        {exp.company}
-                      </span>
-                      <span className="ml-2 font-normal text-muted">
-                        · {exp.type}
-                      </span>
-                    </p>
-                    <ul
-                      className={`mt-4 space-y-2 text-sm leading-relaxed text-subtle ${
-                        idx % 2 === 0 ? "md:text-right" : ""
-                      }`}
-                    >
-                      {exp.highlights.map((h) => (
-                        <li key={h}>{h}</li>
-                      ))}
-                    </ul>
-                    <div
-                      className={`mt-4 flex flex-wrap gap-1.5 ${
-                        idx % 2 === 0 ? "md:justify-end" : ""
-                      }`}
-                    >
-                      {exp.stack.map((s) => (
-                        <Badge key={s}>{s}</Badge>
-                      ))}
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </Reveal>
-          </li>
-        ))}
+                  </motion.div>
+                )}
+              </AnimatePresence>
+            </li>
+          );
+        })}
       </ol>
     </Section>
   );

@@ -4,19 +4,10 @@ import { useRef, useState } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import toast from "react-hot-toast";
-import {
-  FileText,
-  Github,
-  Linkedin,
-  Mail,
-  MapPin,
-  Paperclip,
-  Phone,
-  Send,
-  X
-} from "lucide-react";
+import { FileText, Github, Linkedin, Paperclip, Send, X } from "lucide-react";
 import { Section } from "@/components/ui/Section";
 import { Reveal } from "@/components/ui/Reveal";
+import { LocalTime } from "@/components/ui/LocalTime";
 import { profile } from "@/data/profile";
 import {
   ATTACHMENT_ACCEPT,
@@ -109,84 +100,67 @@ export function Contact() {
   return (
     <Section
       id="contact"
+      index="08"
       heading="contact."
       title={<>Let&apos;s build something good.</>}
       description="Whether it's a full-stack feature, a backend you'd like a second opinion on, or a long-term role - I'd love to hear from you."
     >
       <div className="grid gap-8 md:grid-cols-5">
         <Reveal className="md:col-span-2">
-          <div className="space-y-3">
-            <div className="card p-5">
-              <div className="flex items-start gap-3">
-                <span className="icon-tile h-10 w-10">
-                  <Mail className="h-4 w-4" />
+          <p className="section-index">Say hello</p>
+          <a
+            href={`mailto:${profile.email}`}
+            className="link-slide mt-4 inline-block break-all font-display text-xl font-semibold md:text-2xl"
+          >
+            {profile.email}
+          </a>
+
+          <dl className="mt-8 space-y-5 border-t border-border pt-6">
+            <div>
+              <dt className="section-index">Phone</dt>
+              <dd className="mt-1.5 font-medium">
+                <a href={`tel:${profile.phone.replace(/\s/g, "")}`} className="hover:underline">
+                  {profile.phone}
+                </a>
+              </dd>
+            </div>
+            <div>
+              <dt className="section-index">Based in</dt>
+              <dd className="mt-1.5 font-medium">
+                {profile.location} · <LocalTime /> local time
+              </dd>
+            </div>
+            <div>
+              <dt className="section-index">Availability</dt>
+              <dd className="mt-1.5 flex items-center gap-2 font-medium">
+                <span className="relative flex h-2 w-2">
+                  <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-accent opacity-60" />
+                  <span className="relative inline-flex h-2 w-2 rounded-full bg-accent" />
                 </span>
-                <div className="min-w-0">
-                  <p className="text-xs uppercase tracking-wider text-muted">
-                    Email
-                  </p>
-                  <a
-                    href={`mailto:${profile.email}`}
-                    className="block truncate text-sm font-medium text-fg hover:underline"
-                  >
-                    {profile.email}
-                  </a>
-                </div>
-              </div>
+                {profile.availabilityLabel}
+              </dd>
             </div>
-            <div className="card p-5">
-              <div className="flex items-start gap-3">
-                <span className="icon-tile h-10 w-10">
-                  <Phone className="h-4 w-4" />
-                </span>
-                <div>
-                  <p className="text-xs uppercase tracking-wider text-muted">
-                    Phone
-                  </p>
-                  <a
-                    href={`tel:${profile.phone.replace(/\s/g, "")}`}
-                    className="text-sm font-medium text-fg hover:underline"
-                  >
-                    {profile.phone}
-                  </a>
-                </div>
-              </div>
-            </div>
-            <div className="card p-5">
-              <div className="flex items-start gap-3">
-                <span className="icon-tile h-10 w-10">
-                  <MapPin className="h-4 w-4" />
-                </span>
-                <div>
-                  <p className="text-xs uppercase tracking-wider text-muted">
-                    Location
-                  </p>
-                  <p className="text-sm font-medium text-fg">
-                    {profile.location} · Remote-friendly
-                  </p>
-                </div>
-              </div>
-            </div>
-            <div className="flex flex-wrap gap-2 pt-2">
-              <a
-                href="https://github.com/roger-niyomugabo"
-                target="_blank"
-                rel="noreferrer"
-                aria-label="GitHub"
-                className="btn btn-outline h-10 w-10 p-0"
-              >
-                <Github className="h-4 w-4" />
-              </a>
-              <a
-                href="https://linkedin.com/in/roger-niyomugabo"
-                target="_blank"
-                rel="noreferrer"
-                aria-label="LinkedIn"
-                className="btn btn-outline h-10 w-10 p-0"
-              >
-                <Linkedin className="h-4 w-4" />
-              </a>
-            </div>
+          </dl>
+
+          <div className="mt-8 flex flex-wrap gap-2">
+            <a
+              href="https://github.com/roger-niyomugabo"
+              target="_blank"
+              rel="noreferrer"
+              aria-label="GitHub"
+              className="btn btn-outline h-10 w-10 p-0"
+            >
+              <Github className="h-4 w-4" />
+            </a>
+            <a
+              href="https://linkedin.com/in/roger-niyomugabo"
+              target="_blank"
+              rel="noreferrer"
+              aria-label="LinkedIn"
+              className="btn btn-outline h-10 w-10 p-0"
+            >
+              <Linkedin className="h-4 w-4" />
+            </a>
           </div>
         </Reveal>
 

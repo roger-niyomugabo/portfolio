@@ -14,40 +14,46 @@ export function Services() {
   return (
     <Section
       id="services"
+      index="02"
       heading="services."
       title={<>How I can help your team ship.</>}
       description="Whether you need a feature delivered end-to-end, a backend that holds up under load, or a senior eye on your codebase — here's where I tend to add the most value."
     >
-      <div className="grid gap-5 md:grid-cols-2">
+      <ol className="border-t border-border">
         {services.map((service, idx) => {
           const Icon = iconMap[service.icon] ?? Layout;
           return (
-            <Reveal key={service.title} delay={idx * 0.05}>
-              <div className="card flex h-full flex-col p-6 transition-colors hover:border-accent md:p-8">
-                <div className="mb-5 flex items-center gap-4">
-                  <span className="icon-tile h-12 w-12">
-                    <Icon className="h-5 w-5" />
-                  </span>
-                  <h3 className="font-display text-xl font-semibold">
-                    {service.title}
-                  </h3>
+            <li key={service.title} className="border-b border-border">
+              <Reveal className="group grid gap-5 py-8 md:grid-cols-[5rem_1.15fr_1fr] md:gap-10 md:py-10">
+                <span className="font-mono text-sm text-muted transition-colors group-hover:text-accent">
+                  {String(idx + 1).padStart(2, "0")}
+                </span>
+                <div>
+                  <div className="flex items-center gap-3">
+                    <span className="icon-tile h-9 w-9">
+                      <Icon className="h-4 w-4" />
+                    </span>
+                    <h3 className="font-display text-2xl font-semibold md:text-3xl">
+                      {service.title}
+                    </h3>
+                  </div>
+                  <p className="mt-4 leading-relaxed text-subtle md:text-lg md:leading-relaxed">
+                    {service.blurb}
+                  </p>
                 </div>
-                <p className="mb-5 text-sm leading-relaxed text-subtle md:text-base">
-                  {service.blurb}
-                </p>
-                <ul className="mt-auto space-y-2 text-sm text-subtle">
-                  {service.bullets.map((b) => (
-                    <li key={b} className="flex items-start gap-2.5">
-                      <span className="mt-2 inline-block h-1 w-1 flex-shrink-0 rounded-full bg-accent" />
-                      {b}
+                <ul className="space-y-2.5 text-sm text-subtle md:pt-2 md:text-base">
+                  {service.bullets.map((bullet) => (
+                    <li key={bullet} className="flex items-start gap-3">
+                      <span className="mt-2.5 inline-block h-1 w-1 flex-shrink-0 rounded-full bg-accent" />
+                      {bullet}
                     </li>
                   ))}
                 </ul>
-              </div>
-            </Reveal>
+              </Reveal>
+            </li>
           );
         })}
-      </div>
+      </ol>
     </Section>
   );
 }

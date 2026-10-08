@@ -87,8 +87,9 @@ export default function RootLayout({
         <ThemeProvider attribute="class" defaultTheme="dark" enableSystem>
           <ScrollProgress />
           <Navbar />
-          <main>{children}</main>
+          <main id="top">{children}</main>
           <Footer />
+          <div aria-hidden className="grain" />
           <Toaster
             position="bottom-right"
             toastOptions={{

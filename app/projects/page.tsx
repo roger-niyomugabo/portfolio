@@ -17,10 +17,10 @@ export default function ProjectsPage() {
         </p>
         <p className="mt-3 max-w-3xl text-base leading-relaxed text-subtle md:text-lg md:leading-relaxed">
           Production work, side projects, and platform pieces I&apos;ve owned
-          end-to-end. Click any card for a deeper case study.
+          end-to-end. Open any project for a deeper case study.
         </p>
       </div>
-      <Projects showAll heading={false} />
+      <Projects heading={false} />
     </div>
   );
 }

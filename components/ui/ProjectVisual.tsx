@@ -4,11 +4,13 @@ import { cn } from "@/lib/utils";
 type ProjectVisualProps = {
   project: Project;
   className?: string;
+  /** Hide the year chip, e.g. for thumbnails. */
+  showYear?: boolean;
 };
 
 // A generated product mockup for a project — browser window, phone or terminal,
 // chosen from its category. Decorative; the real content lives in the case study.
-export function ProjectVisual({ project, className }: ProjectVisualProps) {
+export function ProjectVisual({ project, className, showYear = true }: ProjectVisualProps) {
   const kind =
     project.category === "Mobile"
       ? "phone"
@@ -30,9 +32,11 @@ export function ProjectVisual({ project, className }: ProjectVisualProps) {
         {kind === "phone" && <Phone project={project} />}
         {kind === "terminal" && <Terminal project={project} />}
       </div>
-      <span className="absolute right-4 top-4 rounded-[4px] bg-ink px-2.5 py-1 text-xs font-medium text-accent">
-        {project.year}
-      </span>
+      {showYear && (
+        <span className="absolute right-4 top-4 rounded-[4px] bg-ink px-2.5 py-1 text-xs font-medium text-accent">
+          {project.year}
+        </span>
+      )}
     </div>
   );
 }

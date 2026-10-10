@@ -9,7 +9,7 @@ Personal portfolio site built with **Next.js 14 (App Router)**, **TypeScript**, 
 - **Services** as an editorial numbered list
 - **Stack** grouped by layer, with daily drivers highlighted
 - **Experience** as an expandable, keyboard-friendly timeline
-- **Work** showcase rows with generated product mockups (browser / phone / terminal) + case-study pages at `/projects/[slug]`
+- **Work** as an interactive index: hover a row to preview its generated product mockup (browser / phone / terminal), live thumbnails on mobile, case-study pages at `/projects/[slug]`
 - **Blog** list + post pages at `/blog/[slug]` with sample posts
 - **Testimonials** as a full-bleed marquee
 - **Section rail** on wide screens that tracks the section in view, film-grain overlay, pointer-spotlight cards

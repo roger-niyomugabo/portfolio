@@ -11,9 +11,9 @@ export const profile: Profile = {
   location: "Kigali, Rwanda",
   email: "rogerniyomugabo3@gmail.com",
   phone: "+250 782 811 462",
-  resumeHref: "/Roger_Niyomugabo_FullStack_CV.pdf",
+  resumeHref: "/Roger_Niyomugabo_Software_Engineer_Resume.pdf",
   availability: "open",
-  availabilityLabel: "Open to senior full-stack roles",
+  availabilityLabel: "Open to Software Engineering roles",
   roles: [
     "Software Engineer",
     "Backend Architect",

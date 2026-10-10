@@ -37,7 +37,7 @@ export const metadata: Metadata = {
   description: profile.tagline,
   keywords: [
     "Roger Niyomugabo",
-    "Full Stack Engineer",
+    // "Full Stack Engineer",
     "Software Engineer",
     "Rwanda",
     "React",
